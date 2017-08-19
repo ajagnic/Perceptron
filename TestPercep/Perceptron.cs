@@ -17,6 +17,16 @@ namespace TestPercep
             }
         }
 
+        public Perceptron(float[] copyWeights) //alt constructor for injecting already trained connections
+        {
+            Weights = new float[copyWeights.Length];
+            for (int i = 0;i < copyWeights.Length;i++)
+            {
+                //copyWeights[i] *= (-1 * (float)num.NextDouble()); //add a little "mutation"? to new Perceptron
+                Weights[i] = copyWeights[i];
+            }
+        }
+
         public int Guess(float[] inputs)
         {
             float sum = 0;
