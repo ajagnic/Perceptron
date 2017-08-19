@@ -22,7 +22,7 @@ namespace TestPercep
             Weights = new float[copyWeights.Length];
             for (int i = 0;i < copyWeights.Length;i++)
             {
-                //copyWeights[i] *= (-1 * (float)num.NextDouble()); //add a little "mutation"? to new Perceptron
+                copyWeights[i] *= (-1 * (float)num.NextDouble()); //add a little "mutation"? to new Perceptron
                 Weights[i] = copyWeights[i];
             }
         }
