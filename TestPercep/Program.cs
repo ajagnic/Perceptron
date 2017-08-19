@@ -6,13 +6,17 @@ namespace TestPercep
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Number of connections: ");
+            string aConn = Console.ReadLine();
+            int nConn = Convert.ToInt16(aConn);
+
             Console.WriteLine("Size of Perceptron source code?");
             string aSource = Console.ReadLine();
             int nSource = Convert.ToInt16(aSource);
 
 
             float[] source = new float[nSource];
-            Perceptron perceptron = new Perceptron();
+            Perceptron perceptron = new Perceptron(nConn);
 
             Console.WriteLine("Perceptron Learning Rate? ex. 0.1");
             string aLR = Console.ReadLine();
@@ -22,17 +26,23 @@ namespace TestPercep
             int target = -1;
             int gen = 0;
             bool targetHit = false;
+            Random random = new Random();
 
 
             for (int i = 0;i < source.Length;i++)
             {
-                Random random = new Random();
                 float input = (float)random.NextDouble();
                 source[i] = input;
             }
 
 
             Console.WriteLine("Start Perceptron? (yes)(no)  Target = -1, when Target is reached weight values will not change.");
+            float[] initialOutputWeights = perceptron.GetWeights();
+            for (int i = 0; i < initialOutputWeights.Length; i++)
+            {
+                Console.WriteLine("Initial Weight: " + initialOutputWeights[i]);
+            }
+
 
             string answer = Console.ReadLine();
 
@@ -55,13 +65,12 @@ namespace TestPercep
                 }
                 Console.WriteLine("Generation: " + gen);
                 Console.WriteLine("Guess: " + guess);
-                Console.WriteLine("Press Enter to train again, or reply no to stop.");
-                string response = Console.ReadLine();
-                if (response == "no")
+                if (targetHit)
                 {
-                    answer = response;
+                    answer = "no";
                 }
             }
+            Console.ReadLine();
         }
     }
 }

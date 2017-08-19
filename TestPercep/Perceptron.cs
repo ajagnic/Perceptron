@@ -1,52 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TestPercep
 {
     class Perceptron
     {
-        private float[] weights = new float[2];
-        public float learningRate = 0.1f;
+        public float learningRate = 0.1f; //rate of change, also prevents output of 0
+        Random num = new Random();
+        public float[] Weights;
 
-        public Perceptron()
+        public Perceptron(int conns)
         {
-            for (int i = 0; i < weights.Length; i++)
+            Weights = new float[conns];
+            for (int i = 0; i < Weights.Length; i++)
             {
-                Random num = new Random();
-                weights[i] = (float)num.NextDouble();
+                Weights[i] = (float)num.NextDouble(); //initialize weights with random values as starting point
             }
         }
 
         public int Guess(float[] inputs)
         {
             float sum = 0;
-            for (int i = 0; i < weights.Length; i++)
+            for (int i = 0; i < Weights.Length; i++)
             {
-                sum += inputs[i] * weights[i];
+                sum += inputs[i] * Weights[i]; //make a guess based on the current weights
             }
 
-            int output = sign(sum);
+            int output = sign(sum); //convert sum to either 1 or -1
             return output;
         }
 
         public void Train(float[] inputs, int target)
         {
             int guess = Guess(inputs);
-            int error = target - guess;
+            int error = target - guess; //reference for increasing or decreasing weight values in order to reach target
 
-            for (int i = 0; i < weights.Length; i++)
+            for (int i = 0; i < Weights.Length; i++)
             {
-                weights[i] += error * inputs[i] * learningRate;
+                Weights[i] += error * inputs[i] * learningRate; //calculate amount of error in e. input and multiply by LR
             }
         }
 
         public float[] GetWeights()
         {
-            return weights;
+            return Weights;
         }
 
-        public int sign(float n)
+        public int sign(float n) //Activation function or the FeedForward process
         {
             if (n >= 0)
             {
